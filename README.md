@@ -1,4 +1,4 @@
-# Tasklipi
+# [Tasklipi](https://tasklipi.com/)
 
 **AI-powered personal task manager with smart planning, streak tracking, and multi-gateway payments.**
 
@@ -6,6 +6,7 @@
 [![Flask](https://img.shields.io/badge/framework-Flask-green.svg)](https://flask.palletsprojects.com)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
 [![Docker](https://img.shields.io/badge/deploy-Docker-2496ED.svg)](https://docker.com)
+[![Website](https://img.shields.io/badge/website-tasklipi.com-4f8ef7.svg)](https://tasklipi.com/)
 
 ---
 
