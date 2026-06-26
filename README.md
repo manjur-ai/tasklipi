@@ -2,6 +2,8 @@
 
 **AI-powered personal task manager with smart planning, streak tracking, and multi-gateway payments.**
 
+**Website: [https://Tasklipi.com](https://tasklipi.com/)**
+
 [![Python 3.9+](https://img.shields.io/badge/python-3.9+-blue.svg)](https://python.org)
 [![Flask](https://img.shields.io/badge/framework-Flask-green.svg)](https://flask.palletsprojects.com)
 [![License: MIT](https://img.shields.io/badge/license-MIT-yellow.svg)](LICENSE)
