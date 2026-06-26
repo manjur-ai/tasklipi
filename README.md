@@ -16,6 +16,15 @@ Tasklipi is a **full-stack personal task management platform** that combines tra
 
 The backend is a single-file Flask application with a mobile-first SPA frontend. The platform supports multiple AI providers, a multi-gateway payment system for premium features, and timezone-aware streak scheduling.
 
+<p align="center">
+  <img src="screenshots/main page.jpeg" width="200" alt="Main page">
+  <img src="screenshots/ai planing.jpeg" width="200" alt="AI task planning">
+  <img src="screenshots/active task.jpeg" width="200" alt="Active tasks / Executor">
+  <img src="screenshots/mcq exam.jpg" width="200" alt="MCQ exam">
+  <img src="screenshots/monitoring.jpeg" width="200" alt="Student monitoring">
+  <img src="screenshots/my qr code.jpg" width="200" alt="QR code sharing">
+</p>
+
 ---
 
 ## Features by Role
