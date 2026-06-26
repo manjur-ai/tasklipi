@@ -23,7 +23,7 @@ The backend is a single-file Flask application with a mobile-first SPA frontend.
 
 **Assignment Creation & AI Generation**
 - Create and assign planned tasks to students individually or in bulk
-- AI-generate **MCQ assignments** from source material (text, camera photos, PDF files) with configurable question count, difficulty levels, and custom instructions using `html2mcq` library
+- AI-generate **MCQ assignments** from source material (text, camera photos, PDF files) with configurable question count, difficulty levels, explanation modes (Off/Normal/Short), and custom instructions using `html2mcq` library
 - AI-generate **QA (descriptive) assignments** with mark allocation (1–5 marks per question by answer depth)
 - Built-in **MCQ builder** with single-correct, multi-correct, negative marking, and display-doc support
 - Built-in **QA builder** with model answers, explanations, and rich-text answer fields
@@ -81,7 +81,7 @@ The backend is a single-file Flask application with a mobile-first SPA frontend.
 - **Categories** — customizable category system (Personal, School, Study, etc.) for all task types
 
 **AI-Powered Features**
-- **AI Task Planner** — describe your day in plain text (e.g., "Math class at 9am, doctor at 2pm") and get structured planned tasks with times and categories
+- **AI Task Planner** — describe your day in plain text (e.g., "Math class at 9am, doctor at 2pm") and get structured planned tasks with times and categories; **prompt store** saves/loads up to 30 named prompt templates
 - **Ask AI Tutor** — ask questions about a study task with optional image attachments; get structured answers with HTML formatting
 - **Self-MCQ Generator** — generate practice MCQs from your notes, textbook photos, or PDF files
 - **Self-QA Generator** — generate practice descriptive questions from your study material
@@ -91,25 +91,30 @@ The backend is a single-file Flask application with a mobile-first SPA frontend.
 - **Study recordings** — record yourself studying; auto-analyzed for speech percentage, silence percentage, and reading detection
 - **Notes** — markdown editor per task with reading time tracker (accumulated reading time across sessions)
 - **Pomodoro focus timer** — configurable work/break cycles with visual ring progress and session tracking
-- **Executor** — today's timeline view showing all active tasks with elapsed time counters and real-time status
+- **Executor** — today's timeline view showing all active tasks with elapsed time counters and real-time status; **ad-hoc tasks** (free-form entries not linked to any source task); day navigation with date picker
 
 **Exams & Assessments**
-- **MCQ exams** — full-screen exam mode with one-at-a-time or all-visible display; skip/review-later; auto-grading; retake options (all or incorrect only); AI evaluation
-- **QA exams** — rich-text answer editor with keyboard shortcuts; auto-save draft; skip; AI-graded feedback with per-question scores and model answers
+- **MCQ exams** — full-screen exam mode with one-at-a-time or all-visible display; skip/review-later; auto-grading; retake options (all or incorrect only); AI evaluation; **explanation modes** (Off/Normal/Short) on AI-generated questions
+- **QA exams** — rich-text answer editor with keyboard shortcuts; **auto-save draft** to localStorage; skip; AI-graded feedback with per-question scores and model answers; focused retake (incorrect/partly correct only)
 - **Quick self exams** — one-click MCQ/QA generation from any study task
 
 **Engagement & Motivation**
 - **Streak system** — per-task streaks (🔥 counter) and overall streak; timezone-aware daily reset
 - **Milestone celebrations** — confetti animations at 7/30/100/365-day streaks and 10/50/100/500/1000 tasks
 - **Screensaver** — idle-triggered full-screen overlay showing your goals
-- **Push notifications** — task alarms and reminders via browser push API
+- **Push notifications** — task alarms and reminders via browser push API; cross-device alarm dismiss (dismiss on one device syncs to all)
+- **PWA back-button exit guard** — first back press closes overlays; second confirms app exit
 
 **Productivity**
 - **Planned task alarms** — per-task alarm with sync-dismiss across all devices; native Android alarm plugin support
 - **Executor timer** — countdown timer with presets (5/10/15/25/30/45/60 min) and custom input; Web Audio alarm with vibration
 - **Drag-and-drop** — reorder tasks, projects, and steps with mouse and touch support
-- **Attachments** — upload images, videos, PDFs, and documents; auto-generated WebP thumbnails
+- **Attachments** — upload images, videos, PDFs, and documents; auto-generated WebP thumbnails (128×128)
+- **Image processing** — crop modal with quadrilateral drag handles and 90° CW rotate; browser-side normalization to 1536px longest side at JPEG 92% quality before upload
 - **Link previews** — fetch Open Graph / Twitter Card metadata from URLs
+- **Grade visualization** — color-coded score pills (gradeColor, gradePillClass) and progress rings (ringHTML) for MCQ/QA results
+- **AI token usage** — per-operation, per-model token accounting visible in account profile (total, last 30 days, per-operation breakdown)
+- **Onboarding flow** — persona selection (student/teacher/parent/professional/other), name input, class/grade or subject, preset categories by persona
 - **Dark/light mode**
 
 ### For Spouses & Partners
@@ -129,9 +134,11 @@ The backend is a single-file Flask application with a mobile-first SPA frontend.
 
 ### Behind the Scenes
 
-- **AI orchestration** — multi-provider support (OpenAI, Anthropic, Google Gemini, DeepSeek, Groq, OpenRouter) with automatic fallback and user-configurable model selection
+- **AI orchestration** — multi-provider support (OpenAI, Anthropic, Google Gemini, DeepSeek, Groq, OpenRouter) with automatic fallback and user-configurable model selection; per-operation model chaining (e.g., Groq for OCR, Gemini for MCQ generation)
 - **Per-user timezone** — saved on login; used for streak reset, daily rollover, and alarm scheduling
 - **Background workers** — streak scheduler (60s interval), alarm pusher (10s interval), cache warmer (3s interval), daily cleanup of old recordings/notes/AI sources
+- **Security** — OTP-based passwordless auth with escalating rate limits (2min cooldown, 5-resend → 60min block, 5 wrong OTPs → 24h lockout); 30-day persistent tokens surviving app restarts; configurable email providers (Brevo, SendGrid, Gmail SMTP, AWS SES, Mailgun, Mailjet, MailerSend, Resend) with automatic fallback chain; crawler/AI opt-out headers; strict CORS origin validation; dev/test login bypass with env guard
+- **Performance** — SQLite WAL mode, hot-path database indexes, bounded in-memory TTL cache with 3s background warmer; client-side localStorage cache with debounced saves and tab prefetching
 - **Single-file architecture** — all routes, DB logic, and scheduling in one Python file (~9,500 lines); SPA frontend in one HTML file (~13,200 lines) with no build step**
 
 ---
